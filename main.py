@@ -4,9 +4,9 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # Bot API configuration
-api_id = "124b302f0d2aebd8049cf953303612d5"  # Replace with your API ID from my.telegram.org
-api_hash = "7789657"  # Replace with your API hash from my.telegram.org
-bot_token = "6889233025:AAEh8EepYmQzLLNvrTTdBRWwvRDu1svMdXc"  # Replace with your bot token from BotFather
+api_id = 7789657  # Replace with your correct API ID as an integer from my.telegram.org
+api_hash = "124b302f0d2aebd8049cf953303612d5"  # Replace with your correct API hash as a string from my.telegram.org
+bot_token = "6889233025:AAEh8EepYmQzLLNvrTTdBRWwvRDu1svMdXc"  # Replace with your bot token as a string from BotFather
 
 # Dictionary to keep track of connected devices
 connected_devices = {}
@@ -29,11 +29,11 @@ async def start(client, message):
     # Get the device identifier
     device_id = get_device_identifier()
     user_id = message.from_user.id
-    
+
     # Add the device if it's not already registered
     if device_id not in connected_devices:
         connected_devices[device_id] = {"user_id": user_id, "username": message.from_user.username or f"User {user_id}"}
-    
+
     # List connected devices
     device_list = "\n".join([f"{i+1}. {dev}" for i, dev in enumerate(connected_devices.keys())])
     await message.reply(
@@ -54,7 +54,7 @@ async def callback_handler(client, callback_query):
 
     if data.startswith("terminal"):
         await callback_query.message.reply(f"Send me a shell command to execute on device {device_id}:")
-    
+
     elif data.startswith("files"):
         await callback_query.message.reply(f"Send me the file path to download from device {device_id} (e.g., /sdcard/Download):")
 
@@ -66,7 +66,7 @@ async def handle_text(client, message):
 
     if device_id in connected_devices and connected_devices[device_id]["user_id"] == user_id:
         user_input = message.text
-        
+
         if user_input.startswith("/"):
             # Treat input as file path for download
             if os.path.exists(user_input):
