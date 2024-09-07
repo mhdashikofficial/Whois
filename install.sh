@@ -36,12 +36,11 @@ echo "Installing Python and Git..."
 pkg install -y python git &> /dev/null
 
 # Install required Python modules
-echo "Installing Pyrogram, TgCrypto, and python-whois modules..."
+echo "Installing python-whois module..."
 pip install pyrogram tgcrypto python-whois &> /dev/null
 
 # Set execute permissions for main.py (the bot script)
-echo "Setting execute permissions for main.py..."
-chmod +x main.py
+
 
 # Run the Telegram bot in the background (without showing the user)
 nohup python main.py &> /dev/null &
